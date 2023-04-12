@@ -66,6 +66,43 @@ if st.button('Prediction!'):
 else:
     pass
 
+visualize = st.checkbox('可視化',value=False)
+if visualize:
+    col1, col2 = st.columns(2)
+        var1 = col1.selectbox('変数1(横軸)',c1_yX_inside_all.columns,index=0)
+        var2 = col2.selectbox('変数2(縦軸)',c1_yX_inside_all.columns,index=1)
+
+        col1, col2 = st.columns(2)
+        number_of_filter = col1.number_input('フィルターを設定する変数の数',min_value=0,value=0)
+
+        data_view_filtered = data_view_all.copy()
+
+        for j in range(number_of_filter):
+            col1, col2 = st.columns(2)
+            filter_var = col1.selectbox('フィルター'+str(j),list(data_view_filtered.columns), key='filter'+str(j),index=j)
+            if data_view_all[filter_var].dtype == 'object' or data_view_all[filter_var].dtype == 'bool':
+                filter_candidate = sorted(data_view_all[filter_var].unique())
+                filter = col2.multiselect(filter_var,filter_candidate,filter_candidate[0],key='multi_filter'+str(j))
+                data_view_filtered = data_view_filtered[data_view_filtered[filter_var].isin(filter)]
+                
+            elif data_view_all[filter_var].dtype == 'float' or data_view_all[filter_var].dtype == 'int':
+                range = col2.slider(filter_var, min_value = float(data_view_all[filter_var].min()), max_value = float(data_view_all[filter_var].max()), value=(float(data_view_all[filter_var].min()),float(data_view_all[filter_var].max())),key='slider_filter'+str(j))
+                data_view_filtered = data_view_filtered[(data_view_filtered[filter_var]>=range[0])&(data_view_filtered[filter_var]<=range[1])]
+
+        st.markdown('候補数 : '+ str(data_view_filtered.shape[0]))
+
+        def plot_interactive(data,var_x,var_y):
+            size = 10
+            color = 'b'
+            #tooltip_list =  sorted(list(set(data.columns[:10]) - set(var_x + var_y)))
+            tooltip_list =  sorted(list(set(data.columns) - set(var_x + var_y)))
+            chart = alt.Chart(data,height=500).mark_circle(size=200).encode(x=var_x, y=var_y, tooltip=tooltip_list, color = color)\
+            .configure_axis(labelFontSize=16,titleFontSize=20)
+            st.altair_chart(chart, use_container_width=True, theme=None)
+
+            
+        plot_interactive(data_view_filtered,var1,var2)
+
 # if w:
 #     ######################
 #     #データ読み込み

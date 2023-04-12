@@ -104,7 +104,7 @@ if visualize:
         #tooltip_list =  sorted(list(set(data.columns[:10]) - set(var_x + var_y)))
         tooltip_list =  sorted(list(set(data.columns) - set(var_x + var_y)))
         chart = alt.Chart(data,height=500).mark_circle(size=200).encode(x=var_x, y=var_y, tooltip=tooltip_list)\
-        .configure_axis(labelFontSize=16,titleFontSize=20)
+        .configure_axis(labelFontSize=16,titleFontSize=20).interactive()
         st.altair_chart(chart, use_container_width=True, theme=None)
 
 

@@ -26,9 +26,13 @@ st.markdown("## 予測ツール")
 #
 
 w = 'prediction_results_2023-03-28.csv'
-data_all = pd.read_csv(w, index_col=0, encoding='utf-8')
 
-data = data_all.copy()
+@st.cache_data
+def read_data(w):
+    data_all = pd.read_csv(w, index_col=0, encoding='utf-8')
+    return data_all
+
+data = read_data(w)
 
 col1, col2, col3, col4 = st.columns(4)
 Polymer_Mn = col1.selectbox('Polymer_Mn',data['X01_Polymer_Mn'].unique(),index=0)

@@ -25,7 +25,7 @@ st.markdown("## 予測ツール")
 #     w = st.sidebar.file_uploader("実験データアップロード", type = 'xlsx')
 #
 
-w = 'prediction_results_2023-03-28.csv'
+w = 'data/prediction_results_2023-04-12.csv'
 
 @st.cache_data
 def read_data(w):

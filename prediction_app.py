@@ -71,7 +71,7 @@ else:
     pass
 
 st.markdown('----------------------------------------------------')
-
+st.markdown("## 可視化ツール")
 visualize = st.checkbox('可視化',value=False)
 if visualize:
     col1, col2 = st.columns(2)

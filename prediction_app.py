@@ -79,7 +79,7 @@ if visualize:
     var2 = col2.selectbox('変数2(縦軸)',data.columns,index=1)
 
     col1, col2 = st.columns(2)
-    number_of_filter = col1.number_input('フィルターを設定する変数の数',min_value=0,value=0)
+    number_of_filter = col1.number_input('フィルターを設定する変数の数',min_value=0,value=)
 
     data_view_all = data.copy()
     data_view_filtered = data.copy()

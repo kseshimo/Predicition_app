@@ -66,16 +66,19 @@ if st.button('Prediction!'):
 else:
     pass
 
+st.markdown('----------------------------------------------------')
+
 visualize = st.checkbox('可視化',value=False)
 if visualize:
     col1, col2 = st.columns(2)
-    var1 = col1.selectbox('変数1(横軸)',c1_yX_inside_all.columns,index=0)
-    var2 = col2.selectbox('変数2(縦軸)',c1_yX_inside_all.columns,index=1)
+    var1 = col1.selectbox('変数1(横軸)',data.columns,index=0)
+    var2 = col2.selectbox('変数2(縦軸)',data.columns,index=1)
 
     col1, col2 = st.columns(2)
     number_of_filter = col1.number_input('フィルターを設定する変数の数',min_value=0,value=0)
 
-    data_view_filtered = data_view_all.copy()
+    data_view_all = data.copy()
+    data_view_filtered = data.copy()
 
     for j in range(number_of_filter):
         col1, col2 = st.columns(2)
